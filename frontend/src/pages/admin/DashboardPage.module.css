@@ -131,22 +131,9 @@
   gap: var(--space-4);
 }
 
-.tableSectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .tableTitle {
   font-size: var(--font-size-lg);
   font-weight: 600;
-}
-
-.tableCard {
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
 }
 
 .alertRow {

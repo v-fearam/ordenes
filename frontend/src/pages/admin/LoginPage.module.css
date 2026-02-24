@@ -21,18 +21,12 @@
   margin-bottom: var(--space-8);
 }
 
-.logoMark {
-  width: 48px;
+.logoImg {
   height: 48px;
-  background-color: var(--color-primary);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: var(--font-size-2xl);
+  width: auto;
+  object-fit: contain;
   margin: 0 auto var(--space-4);
+  display: block;
 }
 
 .title {
@@ -81,4 +75,20 @@
   color: var(--color-danger);
   font-size: var(--font-size-sm);
   text-align: center;
+}
+
+.portalLink {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--font-size-sm);
+}
+
+.portalLink a {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.portalLink a:hover {
+  color: var(--color-primary);
 }

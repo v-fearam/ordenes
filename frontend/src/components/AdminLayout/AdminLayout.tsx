@@ -16,7 +16,7 @@ export default function AdminLayout() {
     <div className={styles.layout}>
       <header className={styles.topbar}>
         <div className={styles.logoSection}>
-          <div className={styles.logoMark}>S</div>
+          <img src="/logo-snoop.jpg" alt="Snoop Consulting" className={styles.logoImg} />
           <div>
             <div className={styles.logoText}>{SITE.name}</div>
             <div className={styles.logoSubtext}>{SITE.company}</div>

@@ -24,6 +24,17 @@ export interface OrdenCompra {
   observaciones?: string;
 }
 
+export type UserRole = 'admin' | 'proveedor';
+
+export interface Usuario {
+  id: string;
+  nombre: string;
+  email: string;
+  rol: UserRole;
+  proveedorId?: string;
+  proveedorNombre?: string;
+}
+
 export interface Alerta {
   id: string;
   tipo: 'roja' | 'amarilla' | 'verde';
@@ -52,6 +63,15 @@ export const mockOrdenes: OrdenCompra[] = [
   { id: '8', numero: 'OC-2026-008', proveedorId: '1', proveedorNombre: 'Tech Solutions SRL', descripcion: 'Notebooks Lenovo ThinkPad x10', monto: 3200000, fechaEmision: '2026-01-05', fechaEntrega: '2026-01-30', estado: 'CERRADA' },
   { id: '9', numero: 'OC-2026-009', proveedorId: '3', proveedorNombre: 'CloudNet Argentina', descripcion: 'Servicio de backup en la nube - 1TB', monto: 95000, fechaEmision: '2026-02-20', fechaEntrega: '2026-03-10', estado: 'EMITIDA' },
   { id: '10', numero: 'OC-2026-010', proveedorId: '5', proveedorNombre: 'Redes Seguras SRL', descripcion: 'Firewall FortiGate 200F', monto: 1850000, fechaEmision: '2026-02-18', fechaEntrega: '2026-03-20', estado: 'ACEPTADA' },
+];
+
+export const mockUsuarios: Usuario[] = [
+  { id: '1', nombre: 'Fernando Arambarri', email: 'farambarri@gmail.com', rol: 'admin' },
+  { id: '2', nombre: 'Laura Gomez', email: 'laura@snoop.com.ar', rol: 'admin' },
+  { id: '3', nombre: 'Carlos Mendez', email: 'carlos@techsolutions.com', rol: 'proveedor', proveedorId: '1', proveedorNombre: 'Tech Solutions SRL' },
+  { id: '4', nombre: 'Sofia Ruiz', email: 'sofia@techsolutions.com', rol: 'proveedor', proveedorId: '1', proveedorNombre: 'Tech Solutions SRL' },
+  { id: '5', nombre: 'Maria Lopez', email: 'maria@infradigital.com', rol: 'proveedor', proveedorId: '2', proveedorNombre: 'Infraestructura Digital SA' },
+  { id: '6', nombre: 'Juan Perez', email: 'juan@cloudnet.ar', rol: 'proveedor', proveedorId: '3', proveedorNombre: 'CloudNet Argentina' },
 ];
 
 export const mockAlertas: Alerta[] = [

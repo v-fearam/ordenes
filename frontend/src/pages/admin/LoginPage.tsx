@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -10,18 +10,26 @@ interface LoginForm {
 }
 
 export default function AdminLoginPage() {
-  const { login } = useAuth();
+  const { login, logout, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const { register, handleSubmit, formState: { isSubmitting } } = useForm<LoginForm>();
 
+  useEffect(() => {
+    if (isAuthenticated && user?.role === 'admin') {
+      navigate('/admin');
+    } else if (isAuthenticated) {
+      logout();
+    }
+  }, [isAuthenticated, user, navigate, logout]);
+
   const onSubmit = async (data: LoginForm) => {
     try {
       setError('');
-      await login(data.email, data.password, 'admin');
+      await login(data.email, data.password);
       navigate('/admin');
     } catch {
-      setError('Credenciales invalidas');
+      setError('Credenciales invalidas. Usa farambarri@gmail.com / 123');
     }
   };
 
@@ -29,7 +37,7 @@ export default function AdminLoginPage() {
     <div className={styles.container}>
       <div className={styles.card}>
         <div className={styles.header}>
-          <div className={styles.logoMark}>S</div>
+          <img src="/logo-snoop.jpg" alt="Snoop Consulting" className={styles.logoImg} />
           <h1 className={styles.title}>Portal de Administracion</h1>
           <p className={styles.subtitle}>Ingresa tus credenciales para continuar</p>
         </div>
@@ -42,7 +50,7 @@ export default function AdminLoginPage() {
             <input
               id="email"
               type="email"
-              placeholder="admin@snoop.com.ar"
+              placeholder="farambarri@gmail.com"
               {...register('email', { required: true })}
             />
           </div>
@@ -65,6 +73,10 @@ export default function AdminLoginPage() {
             {isSubmitting ? 'Ingresando...' : 'Iniciar Sesion'}
           </button>
         </form>
+
+        <p className={styles.portalLink}>
+          <a href="/portal/login">Acceder como proveedor</a>
+        </p>
       </div>
     </div>
   );

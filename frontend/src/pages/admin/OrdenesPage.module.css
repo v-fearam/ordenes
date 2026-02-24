@@ -48,10 +48,36 @@
   white-space: nowrap;
 }
 
-.emptyRow {
-  text-align: center;
-  color: var(--color-text-secondary);
-  padding: var(--space-10) !important;
+.actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.editBtn,
+.deleteBtn {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  background: none;
+}
+
+.editBtn {
+  color: var(--color-info);
+  border: 1px solid var(--color-info);
+}
+
+.editBtn:hover {
+  background-color: var(--color-info-light);
+}
+
+.deleteBtn {
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-danger-light);
 }
 
 @media (max-width: 768px) {

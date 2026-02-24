@@ -2,20 +2,37 @@ import { createContext, useContext, useState, useCallback, type ReactNode } from
 
 export type UserRole = 'admin' | 'proveedor';
 
-interface User {
+export interface User {
   id: string;
   email: string;
   nombre: string;
   role: UserRole;
+  proveedorId?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string, role: UserRole) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
+
+const MOCK_USERS: Record<string, User> = {
+  'farambarri@gmail.com': {
+    id: '1',
+    email: 'farambarri@gmail.com',
+    nombre: 'Fernando Arambarri',
+    role: 'admin',
+  },
+  'carlos@techsolutions.com': {
+    id: '100',
+    email: 'carlos@techsolutions.com',
+    nombre: 'Carlos Mendez',
+    role: 'proveedor',
+    proveedorId: '1',
+  },
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -36,14 +53,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(stored?.user ?? null);
   const [token, setToken] = useState<string | null>(stored?.token ?? null);
 
-  const login = useCallback(async (_email: string, _password: string, role: UserRole) => {
-    // MOCK: In prototype, accept any credentials
-    const mockUser: User = {
-      id: role === 'admin' ? '1' : '100',
-      email: _email,
-      nombre: role === 'admin' ? 'Admin Compras' : 'Proveedor Demo',
-      role,
-    };
+  const login = useCallback(async (email: string, _password: string) => {
+    const mockUser = MOCK_USERS[email.toLowerCase()];
+    if (!mockUser) {
+      throw new Error('Usuario no encontrado');
+    }
     const mockToken = 'mock-jwt-token-' + Date.now();
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: mockUser, token: mockToken }));

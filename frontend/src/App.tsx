@@ -7,6 +7,7 @@ import AdminLoginPage from './pages/admin/LoginPage';
 import DashboardPage from './pages/admin/DashboardPage';
 import OrdenesPage from './pages/admin/OrdenesPage';
 import ProveedoresPage from './pages/admin/ProveedoresPage';
+import UsuariosPage from './pages/admin/UsuariosPage';
 import PortalLoginPage from './pages/portal/LoginPage';
 import MisOrdenesPage from './pages/portal/MisOrdenesPage';
 
@@ -31,6 +32,7 @@ export default function App() {
             <Route index element={<DashboardPage />} />
             <Route path="ordenes" element={<OrdenesPage />} />
             <Route path="proveedores" element={<ProveedoresPage />} />
+            <Route path="usuarios" element={<UsuariosPage />} />
           </Route>
 
           {/* Provider Portal */}

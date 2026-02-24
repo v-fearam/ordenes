@@ -20,17 +20,10 @@
   gap: var(--space-3);
 }
 
-.logoMark {
-  width: 32px;
-  height: 32px;
-  background-color: var(--color-primary);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: var(--font-size-lg);
+.logoImg {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
 }
 
 .logoText {

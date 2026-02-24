@@ -8,6 +8,7 @@ export const ADMIN_NAV = [
   { label: 'Dashboard', path: '/admin' },
   { label: 'Ordenes de Compra', path: '/admin/ordenes' },
   { label: 'Proveedores', path: '/admin/proveedores' },
+  { label: 'Usuarios', path: '/admin/usuarios' },
 ] as const;
 
 export const ESTADO_OC = {
