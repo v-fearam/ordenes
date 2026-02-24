@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/dev/conalas/**)",
+      "Bash(npx @nestjs/cli@11 new:*)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npx nest build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(python:*)",
+      "Bash(test:*)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

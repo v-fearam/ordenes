@@ -1,0 +1,183 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pageTitle {
+  font-size: var(--font-size-2xl);
+}
+
+.pageSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* KPI Cards */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.kpiCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.kpiLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.kpiValue {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.kpiCard.danger {
+  border-left: 4px solid var(--color-danger);
+}
+
+.kpiCard.warning {
+  border-left: 4px solid var(--color-warning);
+}
+
+.kpiCard.success {
+  border-left: 4px solid var(--color-success);
+}
+
+.kpiCard.info {
+  border-left: 4px solid var(--color-info);
+}
+
+/* Semaforo */
+.semaforoSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.semaforoTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.semaforoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.semaforoCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  text-align: center;
+}
+
+.semaforoIndicator {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 0 auto var(--space-3);
+}
+
+.semaforoIndicator.verde {
+  background-color: var(--color-success);
+  box-shadow: 0 0 12px rgba(22, 163, 74, 0.4);
+}
+
+.semaforoIndicator.amarillo {
+  background-color: var(--color-warning);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+.semaforoIndicator.rojo {
+  background-color: var(--color-danger);
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+}
+
+.semaforoCount {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+}
+
+.semaforoLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* Tables */
+.tableSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tableSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tableTitle {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.tableCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.alertRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.alertDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.alertDot.roja { background-color: var(--color-danger); }
+.alertDot.amarilla { background-color: var(--color-warning); }
+.alertDot.verde { background-color: var(--color-success); }
+
+@media (max-width: 1024px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .semaforoGrid {
+    grid-template-columns: 1fr;
+  }
+}

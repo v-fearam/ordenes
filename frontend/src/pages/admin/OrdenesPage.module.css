@@ -1,0 +1,72 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.pageTitle {
+  font-size: var(--font-size-2xl);
+}
+
+.pageSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+.filters {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.searchInput {
+  flex: 1;
+  max-width: 400px;
+}
+
+.selectFilter {
+  width: 220px;
+}
+
+.tableCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.descCell {
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emptyRow {
+  text-align: center;
+  color: var(--color-text-secondary);
+  padding: var(--space-10) !important;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .searchInput,
+  .selectFilter {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}
