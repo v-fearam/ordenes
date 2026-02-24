@@ -7,17 +7,42 @@
 .pageHeader {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.headerTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-primary);
+}
+
+.headerIcon {
+  font-size: 1.5rem;
 }
 
 .pageTitle {
   font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
 }
 
 .pageSubtitle {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  margin-top: var(--space-1);
+}
+
+.btnIcon {
+  margin-right: var(--space-2);
 }
 
 .filters {
@@ -25,20 +50,9 @@
   gap: var(--space-4);
 }
 
-.searchInput {
-  flex: 1;
-  max-width: 400px;
-}
-
 .selectFilter {
-  width: 220px;
-}
-
-.tableCard {
+  width: 240px;
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
 }
 
 .descCell {
@@ -54,45 +68,67 @@
 }
 
 .editBtn,
-.deleteBtn {
-  padding: var(--space-1) var(--space-3);
-  font-size: var(--font-size-xs);
-  font-weight: 500;
-  border-radius: var(--radius-sm);
-  background: none;
+.deleteBtn,
+.validateBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  background-color: var(--color-surface);
+}
+
+.validateBtn {
+  color: var(--color-success);
+  border: 1px solid var(--color-success-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.validateBtn:hover {
+  background-color: var(--color-success);
+  color: white;
+  border-color: var(--color-success);
 }
 
 .editBtn {
   color: var(--color-info);
-  border: 1px solid var(--color-info);
+  border: 1px solid var(--color-info-light);
+  box-shadow: var(--shadow-sm);
 }
 
 .editBtn:hover {
-  background-color: var(--color-info-light);
+  background-color: var(--color-info);
+  color: white;
+  border-color: var(--color-info);
 }
 
 .deleteBtn {
   color: var(--color-danger);
-  border: 1px solid var(--color-danger);
+  border: 1px solid var(--color-danger-light);
+  box-shadow: var(--shadow-sm);
 }
 
 .deleteBtn:hover {
-  background-color: var(--color-danger-light);
+  background-color: var(--color-danger);
+  color: white;
+  border-color: var(--color-danger);
 }
 
 @media (max-width: 768px) {
-  .filters {
-    flex-direction: column;
+  .pageHeader {
+    align-items: stretch;
   }
 
-  .searchInput,
   .selectFilter {
-    max-width: 100%;
     width: 100%;
   }
 
-  .pageHeader {
-    flex-direction: column;
-    gap: var(--space-4);
+  .editBtn,
+  .deleteBtn {
+    width: 40px;
+    height: 40px;
   }
 }

@@ -140,18 +140,90 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+  padding: var(--space-1) 0;
 }
 
-.alertDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
+.alertIcon {
+  font-size: 1rem;
+  color: var(--color-info);
   flex-shrink: 0;
 }
 
-.alertDot.roja { background-color: var(--color-danger); }
-.alertDot.amarilla { background-color: var(--color-warning); }
-.alertDot.verde { background-color: var(--color-success); }
+.alertCritical {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.alertCritical .alertIcon {
+  color: var(--color-danger);
+  animation: pulse 2s infinite;
+}
+
+.alertText {
+  font-size: var(--font-size-sm);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Interactivity */
+.kpiCard {
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.kpiCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.kpiCard.active {
+  background-color: var(--color-bg);
+  border-width: 2px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+.tableHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clearFilter {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.clearFilter:hover {
+  background-color: var(--color-primary-soft);
+}
 
 @media (max-width: 1024px) {
   .kpiGrid {
@@ -162,9 +234,20 @@
 @media (max-width: 768px) {
   .kpiGrid {
     grid-template-columns: 1fr;
+    gap: var(--space-3);
   }
 
   .semaforoGrid {
     grid-template-columns: 1fr;
+  }
+
+  .page {
+    gap: var(--space-6);
+  }
+
+  .tableHeaderRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
   }
 }

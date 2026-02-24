@@ -63,6 +63,7 @@ export const mockOrdenes: OrdenCompra[] = [
   { id: '8', numero: 'OC-2026-008', proveedorId: '1', proveedorNombre: 'Tech Solutions SRL', descripcion: 'Notebooks Lenovo ThinkPad x10', monto: 3200000, fechaEmision: '2026-01-05', fechaEntrega: '2026-01-30', estado: 'CERRADA' },
   { id: '9', numero: 'OC-2026-009', proveedorId: '3', proveedorNombre: 'CloudNet Argentina', descripcion: 'Servicio de backup en la nube - 1TB', monto: 95000, fechaEmision: '2026-02-20', fechaEntrega: '2026-03-10', estado: 'EMITIDA' },
   { id: '10', numero: 'OC-2026-010', proveedorId: '5', proveedorNombre: 'Redes Seguras SRL', descripcion: 'Firewall FortiGate 200F', monto: 1850000, fechaEmision: '2026-02-18', fechaEntrega: '2026-03-20', estado: 'ACEPTADA' },
+  { id: '11', numero: 'OC-2026-011', proveedorId: '2', proveedorNombre: 'Infraestructura Digital SA', descripcion: 'Actualizacion de Storage SAN', monto: 1200000, fechaEmision: '2026-02-23', fechaEntrega: '2026-03-05', estado: 'ENTREGA_CONFIRMADA' },
 ];
 
 export const mockUsuarios: Usuario[] = [
@@ -75,12 +76,13 @@ export const mockUsuarios: Usuario[] = [
 ];
 
 export const mockAlertas: Alerta[] = [
-  { id: '1', tipo: 'roja', mensaje: 'OC no aceptada - superadas 24hs', ocNumero: 'OC-2026-005', proveedor: 'Redes Seguras SRL', fecha: '2026-02-23' },
-  { id: '2', tipo: 'roja', mensaje: 'Incumplimiento de entrega', ocNumero: 'OC-2026-006', proveedor: 'Infraestructura Digital SA', fecha: '2026-02-22' },
-  { id: '3', tipo: 'amarilla', mensaje: 'Entrega en 7 dias (T-7)', ocNumero: 'OC-2026-001', proveedor: 'Tech Solutions SRL', fecha: '2026-02-22' },
-  { id: '4', tipo: 'amarilla', mensaje: 'Entrega manana (T-1)', ocNumero: 'OC-2026-003', proveedor: 'Tech Solutions SRL', fecha: '2026-02-27' },
-  { id: '5', tipo: 'verde', mensaje: 'Entrega confirmada por proveedor', ocNumero: 'OC-2026-004', proveedor: 'CloudNet Argentina', fecha: '2026-02-21' },
+  { id: '1', tipo: 'roja', mensaje: 'Hito de Aceptacion Vencido (>24hs)', ocNumero: 'OC-2026-005', proveedor: 'Redes Seguras SRL', fecha: '2026-02-23' },
+  { id: '2', tipo: 'roja', mensaje: 'Incumplimiento de entrega confirmada', ocNumero: 'OC-2026-006', proveedor: 'Infraestructura Digital SA', fecha: '2026-02-22' },
+  { id: '3', tipo: 'amarilla', mensaje: 'Recordatorio T-7: Entrega proxima', ocNumero: 'OC-2026-001', proveedor: 'Tech Solutions SRL', fecha: '2026-02-24' },
+  { id: '4', tipo: 'amarilla', mensaje: 'Recordatorio T-1: Entrega manana', ocNumero: 'OC-2026-003', proveedor: 'Tech Solutions SRL', fecha: '2026-02-27' },
+  { id: '5', tipo: 'verde', mensaje: 'Entrega confirmada por proveedor', ocNumero: 'OC-2026-011', proveedor: 'Infraestructura Digital SA', fecha: '2026-02-24' },
   { id: '6', tipo: 'verde', mensaje: 'OC validada por cliente interno', ocNumero: 'OC-2026-007', proveedor: 'DataServ Consultores', fecha: '2026-02-20' },
+  { id: '7', tipo: 'roja', mensaje: 'OC-2026-009 Sin Aceptacion (22hs)', ocNumero: 'OC-2026-009', proveedor: 'CloudNet Argentina', fecha: '2026-02-24' },
 ];
 
 export function formatMonto(monto: number): string {

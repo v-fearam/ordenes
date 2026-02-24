@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { FiPackage, FiTruck, FiCheckCircle, FiInfo, FiClock } from 'react-icons/fi';
 import { ESTADO_LABELS, ESTADO_BADGE, type EstadoOC } from '../../constants/site';
 import { useAuth } from '../../context/AuthContext';
 import { mockOrdenes, formatMonto, formatFecha } from '../../mocks/data';
 import styles from './MisOrdenesPage.module.css';
 
-const ACCION_CONFIG: Partial<Record<EstadoOC, { label: string; nextEstado: EstadoOC; confirmMsg: string }>> = {
-  EMITIDA: { label: 'Aceptar OC', nextEstado: 'ACEPTADA', confirmMsg: 'OC aceptada exitosamente' },
-  EN_SEGUIMIENTO: { label: 'Confirmar Entrega', nextEstado: 'ENTREGA_CONFIRMADA', confirmMsg: 'Entrega confirmada' },
+const ACCION_CONFIG: Partial<Record<EstadoOC, { label: string; nextEstado: EstadoOC; confirmMsg: string; icon: any }>> = {
+  EMITIDA: { label: 'Aceptar OC', nextEstado: 'ACEPTADA', confirmMsg: 'OC aceptada exitosamente', icon: FiCheckCircle },
+  EN_SEGUIMIENTO: { label: 'Confirmar Entrega', nextEstado: 'ENTREGA_CONFIRMADA', confirmMsg: 'Entrega confirmada', icon: FiTruck },
 };
 
 export default function MisOrdenesPage() {
@@ -46,27 +47,41 @@ export default function MisOrdenesPage() {
           return (
             <div key={oc.id} className={styles.ocCard}>
               <div className={styles.ocCardHeader}>
-                <span className={styles.ocNumero}>{oc.numero}</span>
+                <div className={styles.ocHeaderTitle}>
+                  <FiPackage className={styles.ocIcon} />
+                  <span className={styles.ocNumero}>{oc.numero}</span>
+                </div>
                 <span className={`badge ${ESTADO_BADGE[estadoActual]}`}>
                   {ESTADO_LABELS[estadoActual]}
                 </span>
               </div>
 
-              <p className={styles.ocDescripcion}>{oc.descripcion}</p>
+              <div className={styles.ocBody}>
+                <p className={styles.ocDescripcion}>{oc.descripcion}</p>
 
-              <div className={styles.ocDetails}>
-                <div className={styles.ocDetail}>
-                  <span className={styles.ocDetailLabel}>Monto</span>
-                  <span className={styles.ocDetailValue}>{formatMonto(oc.monto)}</span>
-                </div>
-                <div className={styles.ocDetail}>
-                  <span className={styles.ocDetailLabel}>Fecha Entrega</span>
-                  <span className={styles.ocDetailValue}>{formatFecha(oc.fechaEntrega)}</span>
+                <div className={styles.ocDetails}>
+                  <div className={styles.ocDetail}>
+                    <FiInfo className={styles.detailIcon} />
+                    <div>
+                      <span className={styles.ocDetailLabel}>Monto</span>
+                      <span className={styles.ocDetailValue}>{formatMonto(oc.monto)}</span>
+                    </div>
+                  </div>
+                  <div className={styles.ocDetail}>
+                    <FiClock className={styles.detailIcon} />
+                    <div>
+                      <span className={styles.ocDetailLabel}>Fecha Entrega</span>
+                      <span className={styles.ocDetailValue}>{formatFecha(oc.fechaEntrega)}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {mensaje && (
-                <div className={styles.confirmado}>{mensaje}</div>
+                <div className={styles.confirmado}>
+                  <FiCheckCircle size={18} />
+                  <span>{mensaje}</span>
+                </div>
               )}
 
               {accionConfig && !mensaje && (
@@ -74,7 +89,8 @@ export default function MisOrdenesPage() {
                   className={`btn-primary ${styles.actionBtn}`}
                   onClick={() => handleAccion(oc.id, accionConfig.nextEstado, accionConfig.confirmMsg)}
                 >
-                  {accionConfig.label}
+                  <accionConfig.icon className={styles.btnIcon} />
+                  <span>{accionConfig.label}</span>
                 </button>
               )}
             </div>

@@ -1,4 +1,5 @@
 import { useState, useMemo, type ReactNode } from 'react';
+import { FiSearch, FiChevronLeft, FiChevronRight, FiChevronUp, FiChevronDown, FiFilter } from 'react-icons/fi';
 import styles from './DataTable.module.css';
 
 export interface Column<T> {
@@ -119,7 +120,7 @@ export default function DataTable<T extends Record<string, any>>({
       <div className={styles.toolbar}>
         {searchable && (
           <div className={styles.searchBox}>
-            <span className={styles.searchIcon}>&#128269;</span>
+            <FiSearch className={styles.searchIcon} />
             <input
               type="text"
               className={styles.searchInput}
@@ -129,101 +130,136 @@ export default function DataTable<T extends Record<string, any>>({
             />
           </div>
         )}
-        <div className={styles.pageSize}>
-          <span>Mostrar</span>
-          <select
-            className={styles.pageSizeSelect}
-            value={pageSize}
-            onChange={(e) => handlePageSizeChange(Number(e.target.value))}
-          >
-            {pageSizes.map((s) => (
-              <option key={s} value={s}>{s}</option>
-            ))}
-          </select>
-          <span>por pagina</span>
+        <div className={styles.controls}>
+          <div className={styles.pageSize}>
+            <span>Mostrar</span>
+            <select
+              className={styles.pageSizeSelect}
+              value={pageSize}
+              onChange={(e) => handlePageSizeChange(Number(e.target.value))}
+            >
+              {pageSizes.map((s) => (
+                <option key={s} value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Table */}
-      <div className={styles.tableCard}>
-        <table>
-          <thead>
-            <tr>
-              {columns.map((col) => (
-                <th
-                  key={col.key}
-                  className={col.sortable !== false ? styles.sortableHeader : undefined}
-                  onClick={col.sortable !== false ? () => handleSort(col.key) : undefined}
-                >
-                  <span className={styles.headerContent}>
-                    {col.label}
-                    {col.sortable !== false && (
-                      <span className={`${styles.sortArrow} ${sortKey === col.key ? styles.active : ''}`}>
-                        {sortKey === col.key ? (sortDir === 'asc' ? '▲' : '▼') : '▲▼'}
-                      </span>
-                    )}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {paged.length > 0 ? (
-              paged.map((row) => (
-                <tr key={String(row[keyField])}>
-                  {columns.map((col) => (
-                    <td key={col.key}>
-                      {col.render ? col.render(row) : String(row[col.key] ?? '')}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ) : (
+      {/* Desktop Table View */}
+      <div className={styles.tableView}>
+        <div className={styles.tableCard}>
+          <table>
+            <thead>
               <tr>
-                <td colSpan={columns.length} className={styles.emptyRow}>
-                  {emptyMessage}
-                </td>
+                {columns.map((col) => (
+                  <th
+                    key={col.key}
+                    className={col.sortable !== false ? styles.sortableHeader : undefined}
+                    onClick={col.sortable !== false ? () => handleSort(col.key) : undefined}
+                  >
+                    <span className={styles.headerContent}>
+                      {col.label}
+                      {col.sortable !== false && (
+                        <span className={`${styles.sortArrow} ${sortKey === col.key ? styles.active : ''}`}>
+                          {sortKey === col.key ? (sortDir === 'asc' ? <FiChevronUp /> : <FiChevronDown />) : <FiChevronDown />}
+                        </span>
+                      )}
+                    </span>
+                  </th>
+                ))}
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {paged.length > 0 ? (
+                paged.map((row) => (
+                  <tr key={String(row[keyField])}>
+                    {columns.map((col) => (
+                      <td key={col.key}>
+                        {col.render ? col.render(row) : String(row[col.key] ?? '')}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={columns.length} className={styles.emptyRow}>
+                    <div className={styles.emptyContent}>
+                      <FiFilter size={32} />
+                      <p>{emptyMessage}</p>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Mobile Card View */}
+      <div className={styles.cardView}>
+        {paged.length > 0 ? (
+          <div className={styles.cardGrid}>
+            {paged.map((row) => (
+              <div key={String(row[keyField])} className={styles.mobileCard}>
+                {columns.map((col) => (
+                  <div key={col.key} className={styles.cardField}>
+                    <div className={styles.cardLabel}>{col.label}</div>
+                    <div className={styles.cardValue}>
+                      {col.render ? col.render(row) : String(row[col.key] ?? '')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className={styles.emptyCard}>
+            <FiFilter size={32} />
+            <p>{emptyMessage}</p>
+          </div>
+        )}
       </div>
 
       {/* Pagination */}
       {sorted.length > 0 && (
         <div className={styles.pagination}>
           <span className={styles.pageInfo}>
-            Mostrando {startIdx}-{endIdx} de {sorted.length} resultado{sorted.length !== 1 ? 's' : ''}
+            {startIdx}-{endIdx} de {sorted.length}
           </span>
           <div className={styles.pageButtons}>
             <button
               className={styles.pageBtn}
               disabled={safePage === 0}
               onClick={() => setPage(safePage - 1)}
+              aria-label="Previous page"
             >
-              &lsaquo;
+              <FiChevronLeft />
             </button>
-            {getPageNumbers().map((p, i) =>
-              p === 'ellipsis' ? (
-                <span key={`e${i}`} className={styles.pageBtn} style={{ border: 'none', cursor: 'default' }}>
-                  ...
-                </span>
-              ) : (
-                <button
-                  key={p}
-                  className={`${styles.pageBtn} ${p === safePage ? styles.active : ''}`}
-                  onClick={() => setPage(p)}
-                >
-                  {p + 1}
-                </button>
-              ),
-            )}
+            <div className={styles.pagesList}>
+              {getPageNumbers().map((p, i) =>
+                p === 'ellipsis' ? (
+                  <span key={`e${i}`} className={styles.ellipsis}>
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={p}
+                    className={`${styles.pageBtn} ${p === safePage ? styles.active : ''}`}
+                    onClick={() => setPage(p)}
+                  >
+                    {p + 1}
+                  </button>
+                ),
+              )}
+            </div>
             <button
               className={styles.pageBtn}
               disabled={safePage >= totalPages - 1}
               onClick={() => setPage(safePage + 1)}
+              aria-label="Next page"
             >
-              &rsaquo;
+              <FiChevronRight />
             </button>
           </div>
         </div>

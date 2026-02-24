@@ -1,5 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { FiPlus, FiEdit2, FiTrash2, FiFileText, FiCheckCircle } from 'react-icons/fi';
 import { ESTADO_OC, ESTADO_LABELS, ESTADO_BADGE, type EstadoOC } from '../../constants/site';
 import DataTable, { type Column } from '../../components/DataTable/DataTable';
 import Modal, { modalStyles } from '../../components/Modal/Modal';
@@ -56,6 +57,16 @@ export default function OrdenesPage() {
     setOrdenes((prev) => prev.filter((o) => o.id !== id));
   }, []);
 
+  const validateOC = useCallback((id: string) => {
+    setOrdenes(prev => prev.map(o => {
+      if (o.id === id) {
+        if (o.estado === 'ENTREGA_CONFIRMADA') return { ...o, estado: 'VALIDADA_CLIENTE' as EstadoOC };
+        if (o.estado === 'VALIDADA_CLIENTE') return { ...o, estado: 'CERRADA' as EstadoOC };
+      }
+      return o;
+    }));
+  }, []);
+
   const onSubmit = (data: OCForm) => {
     const proveedor = mockProveedores.find((p) => p.id === data.proveedorId);
 
@@ -64,16 +75,16 @@ export default function OrdenesPage() {
         prev.map((o) =>
           o.id === editingOC.id
             ? {
-                ...o,
-                proveedorId: data.proveedorId,
-                proveedorNombre: proveedor?.nombre ?? '',
-                descripcion: data.descripcion,
-                monto: Number(data.monto),
-                fechaEmision: data.fechaEmision,
-                fechaEntrega: data.fechaEntrega,
-                estado: data.estado,
-                observaciones: data.observaciones || undefined,
-              }
+              ...o,
+              proveedorId: data.proveedorId,
+              proveedorNombre: proveedor?.nombre ?? '',
+              descripcion: data.descripcion,
+              monto: Number(data.monto),
+              fechaEmision: data.fechaEmision,
+              fechaEntrega: data.fechaEntrega,
+              estado: data.estado,
+              observaciones: data.observaciones || undefined,
+            }
             : o,
         ),
       );
@@ -141,11 +152,20 @@ export default function OrdenesPage() {
       sortable: false,
       render: (row) => (
         <div className={styles.actions}>
-          <button className={styles.editBtn} onClick={() => openEdit(row)}>
-            Editar
+          {(row.estado === 'ENTREGA_CONFIRMADA' || row.estado === 'VALIDADA_CLIENTE') && (
+            <button
+              className={styles.validateBtn}
+              onClick={() => validateOC(row.id)}
+              title={row.estado === 'ENTREGA_CONFIRMADA' ? "Validar Entrega" : "Cerrar OC"}
+            >
+              <FiCheckCircle size={16} />
+            </button>
+          )}
+          <button className={styles.editBtn} onClick={() => openEdit(row)} title="Editar">
+            <FiEdit2 size={16} />
           </button>
-          <button className={styles.deleteBtn} onClick={() => handleDelete(row.id)}>
-            Eliminar
+          <button className={styles.deleteBtn} onClick={() => handleDelete(row.id)} title="Eliminar">
+            <FiTrash2 size={16} />
           </button>
         </div>
       ),
@@ -155,13 +175,19 @@ export default function OrdenesPage() {
   return (
     <div className={styles.page}>
       <div className={styles.pageHeader}>
-        <div>
-          <h1 className={styles.pageTitle}>Ordenes de Compra</h1>
+        <div className={styles.headerInfo}>
+          <div className={styles.headerTitleRow}>
+            <FiFileText className={styles.headerIcon} />
+            <h1 className={styles.pageTitle}>Ordenes de Compra</h1>
+          </div>
           <p className={styles.pageSubtitle}>
             {ordenesFiltradas.length} orden{ordenesFiltradas.length !== 1 ? 'es' : ''} encontrada{ordenesFiltradas.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <button className="btn-primary" onClick={openCreate}>+ Nueva OC</button>
+        <button className="btn-primary" onClick={openCreate}>
+          <FiPlus className={styles.btnIcon} />
+          <span>Nueva OC</span>
+        </button>
       </div>
 
       {/* Status filter */}
